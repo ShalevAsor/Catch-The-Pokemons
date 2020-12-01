@@ -1,4 +1,4 @@
-package ex2;
+package api;
 
 
 import java.util.Objects;
@@ -42,7 +42,7 @@ public class NodeData implements  node_data{
         this._y=Double.parseDouble(y);
         this._z=Double.parseDouble(z);
         }
-
+        //-----------getters---------------//
         @Override
         public double x() {
             return this._x;
@@ -80,10 +80,8 @@ public class NodeData implements  node_data{
 
     //----------------NodeInfo_methods--------------//
 
-    //---------Constructor--------//
-    public NodeData(){
-        //this._key=_id++;
-    }
+    //---------Constructors--------//
+
     public NodeData(int key){
         this._key=key;
         _gl=null;
@@ -94,57 +92,100 @@ public class NodeData implements  node_data{
         this._weight=weight;
         this._tag=tag;
     }
+//---------setters and getters-----------------//
 
+    /**
+     * return the key associate with this node
+     * @return key
+     */
     @Override
     public int getKey() {
         return this._key;
     }
 
+    /**
+     * return the geographic location of this node
+     * @return node location
+     */
     @Override
     public geo_location getLocation() {
         return this._gl;
     }
 
+    /**
+     * allow to set a new location to this node
+     * @param p - new new location  (position) of this node.
+     */
     @Override
     public void setLocation(geo_location p) {
         this._gl=(GeoLocation)p;
     }
 
+    /**
+     * return the weight of this node
+     * @return weight
+     */
     @Override
     public double getWeight() {
         return this._weight;
     }
 
+    /**
+     * allow to set a new weight to this node
+     * Note:the weight must be positive
+     * @param w - the new weight
+     */
     @Override
     public void setWeight(double w) {
         if(w>0){
         this._weight=w;}
     }
 
+    /**
+     * return the info of this node
+     * @return node info
+     */
     @Override
     public String getInfo() {
         return this._info;
     }
 
+    /**
+     * allow to set a new info to this node
+     * @param s-the new info
+     */
     @Override
     public void setInfo(String s) {
         this._info=s;
     }
 
+    /**
+     * return the tag of this node
+     * @return tag
+     */
     @Override
     public int getTag() {
         return this._tag;
     }
 
+    /**
+     * allow to set a new tag to this node
+     * @param t - the new value of the tag
+     */
     @Override
     public void setTag(int t) {
         this._tag=t;
     }
 
+    /**
+     * allow to set a new key to this node
+     * @param key
+     */
     public void setKey(int key){
         _key=key;
     }
 
+    //------------equals,toString--------------//
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

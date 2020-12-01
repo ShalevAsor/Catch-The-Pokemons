@@ -1,12 +1,12 @@
 import static org.junit.jupiter.api.Assertions.*;
-import ex2.*;
+import api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
 /**
- * This is a test class for NodeData, each test in this class examines edge cases
+ * This is a simple test class for NodeData, each test in this class examines edge cases
  */
 class NodeDataTest {
 
@@ -36,7 +36,7 @@ class NodeDataTest {
     }
     @Test
     void getAndSetInfoTest(){
-       node_data n1=new NodeData();
+       node_data n1=new NodeData(1);
        n1.setInfo("hello");
         assertEquals("hello", n1.getInfo());
         assertNotEquals("  ",n1.getInfo());

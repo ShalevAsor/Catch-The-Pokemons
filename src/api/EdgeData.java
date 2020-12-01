@@ -1,9 +1,7 @@
-package ex2;
-
-import java.util.Objects;
+package api;
 
 /**
- * This class represent an edge between two vertices on this graph
+ * This class represent an edge between two nodes in directed weighted graph
  */
 public class EdgeData implements edge_data{
 
@@ -20,9 +18,6 @@ public class EdgeData implements edge_data{
         this._src=src;
         this._dest=dest;
         this._weight=weight;
-    }
-    public EdgeData(){
-
     }
     /**
      * This method return the key of the source node of this edge

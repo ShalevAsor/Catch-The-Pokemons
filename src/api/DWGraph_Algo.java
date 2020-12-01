@@ -1,14 +1,7 @@
-package ex2;
+package api;
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-
-
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -20,7 +13,6 @@ import java.util.*;
 
 public class DWGraph_Algo implements dw_graph_algorithms {
     directed_weighted_graph graph=new DWGraph_DS();
-    static  String SAVED_GRAPH="graph.json";
 
     //-------------------subNode class------------------//
 
@@ -32,6 +24,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         private final int _parent;//represent the node thats this subNode came from
         private final int _currentKey;
 
+        //-----------constructors-------------//
         public subNode(double weight, int parent, int key) {
             this._parent = parent;
             this._weight = weight;
@@ -41,6 +34,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
             this._currentKey = key;
             this._parent=parentKey;
         }
+        //------------setters and getters----------------//
         public void setWeight(double w) {
             this._weight = w;
         }
@@ -68,73 +62,69 @@ public class DWGraph_Algo implements dw_graph_algorithms {
             return ans;
         }
     }
-    //-------------------------------Json class-------------------------------//
-    class GraphJsonDeserializer implements JsonDeserializer<DWGraph_DS> {
 
+    //-------------------------------Json class-------------------------------//
+
+    /**
+     * This class is necessary for the Deserialization it support two type of graphs
+     * the first one is the graph that i made with: edges,vertices,ModeCount,Neighbors
+     * the second one is the graph that made with:Edges,Nodes
+     */
+    static class GraphJsonDeserializer implements JsonDeserializer<DWGraph_DS> {
 
         @Override
         public DWGraph_DS deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             DWGraph_DS graph_ds = new DWGraph_DS();
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            if (jsonObject.get("Edges") != null) {
-                JsonArray vertices = jsonObject.get("Nodes").getAsJsonArray();
-                JsonArray edges = jsonObject.get("Edges").getAsJsonArray();
-                for (int i=0;i<vertices.size();i++) {
+            if(jsonObject.get("Edges") != null) {//if this is the "Edges" and "Nodes" type of graph
+                JsonArray vertices = jsonObject.get("Nodes").getAsJsonArray();//get the nodes as Json object
+                JsonArray edges = jsonObject.get("Edges").getAsJsonArray();//same for the Edges
+                for (int i=0;i<vertices.size();i++) {//for loop to get accesses to each node in this graph
                     NodeData.GeoLocation glPointer = null;
-                    JsonElement node = vertices.get(i);
-                    int nodeKey = node.getAsJsonObject().get("id").getAsInt();
-                    //  double weight=node.getAsJsonObject().get("_weight").getAsDouble();
-                    //  int nodeTag=node.getAsJsonObject().get("_tag").getAsInt();
-                    // String nodeInfo=node.getAsJsonObject().get("_info").getAsString();
-                    if (node.getAsJsonObject().get("pos") != null) {
-                        String[] arr= new String[3];
-                        String location=node.getAsJsonObject().get("pos").getAsString();
-                        arr=location.split(",");
-                        double _x = Double.parseDouble(arr[0]);
+                    JsonElement node = vertices.get(i);//pointer the the "i" node
+                    int nodeKey = node.getAsJsonObject().get("id").getAsInt();//get his key
+                    if (node.getAsJsonObject().get("pos") != null) {//if thos node has a location
+                        String[] arr;//creat String Array to keep the x,y,z values
+                        String location=node.getAsJsonObject().get("pos").getAsString();//get the json object that keep the location of this node
+                        arr=location.split(",");// split the string to get x y z in separately
+                        double _x = Double.parseDouble(arr[0]);//convert the string into a double
                         double _y = Double.parseDouble(arr[1]);
                         double _z = Double.parseDouble(arr[2]);
-                        NodeData.GeoLocation nodeGl = new NodeData.GeoLocation(_x, _y, _z);
+                        NodeData.GeoLocation nodeGl = new NodeData.GeoLocation(_x, _y, _z);//create a new geo_location
                         glPointer = nodeGl;
                     }
                     NodeData n = new NodeData(nodeKey);
-                    n.setLocation(glPointer);
-                    graph_ds.addNode(n);
+                    n.setLocation(glPointer);//add the new geo_location to this node
+                    graph_ds.addNode(n);//finally add this node into the graph
                 }
-                for (int i=0;i<edges.size();i++) {
-                    JsonElement edge = edges.get(i);
-                    int srcKey = edge.getAsJsonObject().get("src").getAsInt();
-                    int destKey = edge.getAsJsonObject().get("dest").getAsInt();
-                    double weight = edge.getAsJsonObject().get("w").getAsDouble();
-                    //  int tag=edge.getAsJsonObject().get("_tag").getAsInt();
-                    graph_ds.connect(srcKey, destKey, weight);
-                    // graph_ds.getEdge(srcKey,destKey).setTag(tag);
+                for (int i=0;i<edges.size();i++) {//for loop to get accesses to each edge in this graph
+                    JsonElement edge = edges.get(i);//pointer to the edge
+                    int srcKey = edge.getAsJsonObject().get("src").getAsInt();//get the src of this edge
+                    int destKey = edge.getAsJsonObject().get("dest").getAsInt();//get the dest of this edge
+                    double weight = edge.getAsJsonObject().get("w").getAsDouble();//get the weight of this edge
+                    graph_ds.connect(srcKey, destKey, weight);//connect the src and the dest by this weight
                 }
-//                int mc = jsonObject.get("ModeCount").getAsInt();
-//                graph_ds.setModeCount(mc);
-                return graph_ds;
-            } else {
-                JsonObject vertices = jsonObject.get("vertices").getAsJsonObject();
-                JsonObject edges = jsonObject.get("edges").getAsJsonObject();
-
-                for (Map.Entry<String, JsonElement> set : vertices.entrySet()) {
+            } else {//now we are working on the first type of graph
+                JsonObject vertices = jsonObject.get("vertices").getAsJsonObject();//get the nodes of this graph
+                JsonObject edges = jsonObject.get("edges").getAsJsonObject();//get the edges of this graph
+                for (Map.Entry<String, JsonElement> set : vertices.entrySet()) {//get accesses to each node in this graph
                     NodeData.GeoLocation glPointer = null;
-                    JsonElement node = set.getValue();
-                    int nodeKey = node.getAsJsonObject().get("_key").getAsInt();
-                    double weight = node.getAsJsonObject().get("_weight").getAsDouble();
-                    int nodeTag = node.getAsJsonObject().get("_tag").getAsInt();
-                    String nodeInfo = node.getAsJsonObject().get("_info").getAsString();
-                    if (node.getAsJsonObject().get("_gl") != null) {
+                    JsonElement node = set.getValue();//pointer to the node
+                    int nodeKey = node.getAsJsonObject().get("_key").getAsInt();//get this node key
+                    double weight = node.getAsJsonObject().get("_weight").getAsDouble();//get this node weight
+                    int nodeTag = node.getAsJsonObject().get("_tag").getAsInt();//get this node tag
+                    String nodeInfo = node.getAsJsonObject().get("_info").getAsString();//get this node info
+                    if (node.getAsJsonObject().get("_gl") != null) {//if this node has a geo_location than get the x,y,z as well
                         double _x = node.getAsJsonObject().get("_gl").getAsJsonObject().get("_x").getAsDouble();
                         double _y = node.getAsJsonObject().get("_gl").getAsJsonObject().get("_y").getAsDouble();
                         double _z = node.getAsJsonObject().get("_gl").getAsJsonObject().get("_z").getAsDouble();
-                        NodeData.GeoLocation nodeGl = new NodeData.GeoLocation(_x, _y, _z);
-                        glPointer = nodeGl;
+                        glPointer = new NodeData.GeoLocation(_x, _y, _z);////create a new geo_loctaion
                     }
-                    NodeData n = new NodeData(nodeKey, weight, nodeTag, nodeInfo);
-                    n.setLocation(glPointer);
-                    graph_ds.addNode(n);
+                    NodeData n = new NodeData(nodeKey, weight, nodeTag, nodeInfo);//create a new node with the data above
+                    n.setLocation(glPointer);//set the location
+                    graph_ds.addNode(n);//finally add the new node into this graph
                 }
-                for (Map.Entry<String, JsonElement> set : edges.entrySet()) {
+                for (Map.Entry<String, JsonElement> set : edges.entrySet()) {//same process to the edges
                     JsonElement edge = set.getValue();
                     int srcKey = edge.getAsJsonObject().get("_src").getAsInt();
                     int destKey = edge.getAsJsonObject().get("_dest").getAsInt();
@@ -143,16 +133,12 @@ public class DWGraph_Algo implements dw_graph_algorithms {
                     graph_ds.connect(srcKey, destKey, weight);
                     graph_ds.getEdge(srcKey, destKey).setTag(tag);
                 }
-                int mc = jsonObject.get("ModeCount").getAsInt();
+                int mc = jsonObject.get("ModeCount").getAsInt();//update the ModeCount after the graph is ready
                 graph_ds.setModeCount(mc);
-                return graph_ds;
             }
+            return graph_ds;
         }
     }
-
-
-
-
     //----------------------DWGraph_Algo methods-----------------------------------//
 
     /**
@@ -186,21 +172,15 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     @Override
     public directed_weighted_graph copy() {
         DWGraph_DS copy = new DWGraph_DS();
-        Iterator<node_data> it1 = this.graph.getV().iterator();
-        while (it1.hasNext()) {
-            node_data pointer = it1.next();//pointer to this graph vertices
-            copy.addNode(new NodeData(pointer.getKey()));//add vertex to copy
-            copy.getVertices().get(pointer.getKey()).setTag(pointer.getTag());//set the original tag of this node
-            copy.getVertices().get(pointer.getKey()).setInfo(pointer.getInfo());//set the original info of this node
+        for (node_data Vpointer : this.graph.getV()) {//pointer to this graph vertices
+            copy.addNode(new NodeData(Vpointer.getKey()));//add vertex to copy
+            copy.getVertices().get(Vpointer.getKey()).setTag(Vpointer.getTag());//set the original tag of this node
+            copy.getVertices().get(Vpointer.getKey()).setInfo(Vpointer.getInfo());//set the original info of this node
         }
-        Iterator<node_data> it2 = this.graph.getV().iterator();
-        while (it2.hasNext()) {
-            node_data pointer2 = it2.next();
-            Iterator<edge_data> it3 = this.graph.getE(pointer2.getKey()).iterator();//pointer2 neighbors
-            while (it3.hasNext()) {
-                edge_data pointer3 = it3.next();//
-                double weight = this.graph.getEdge(pointer2.getKey(), pointer3.getDest()).getWeight();//get the original weight
-                copy.connect(pointer2.getKey(), pointer3.getDest(), weight);//connect on the copy.
+        for (node_data NeiPointer : this.graph.getV()) { //pointer2 neighbors
+            for (edge_data edgePointer : this.graph.getE(NeiPointer.getKey())) {
+                double weight = this.graph.getEdge(NeiPointer.getKey(), edgePointer.getDest()).getWeight();//get the original weight
+                copy.connect(NeiPointer.getKey(), edgePointer.getDest(), weight);//connect on the copy.
             }
         }
         return copy;
@@ -287,48 +267,44 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return this.reverseList(myList);
     }
 
+    /**
+     * This method save this directed weighted graph by the given file name into a Json format
+     *
+     * @param file - the file name (may include a relative path).
+     * @return true if this graph saved successfully
+     */
     @Override
     public boolean save(String file) {
         boolean saved;
-//        Path myfile = Paths.get(file);
-//        Gson gson = new Gson();
-//        String js = gson.toJson(this.graph);
-        Gson gson=new GsonBuilder().setPrettyPrinting().create();
-        String jsGraph= gson.toJson(this.graph);
+        Gson gson=new GsonBuilder().setPrettyPrinting().create();//create Gson object
+        String jsGraph= gson.toJson(this.graph);//transfer this graph into a json format
         try {
-
-            PrintWriter pw=new PrintWriter(new File(file));
-            pw.write(jsGraph);
-            pw.close();
+            PrintWriter pw=new PrintWriter(new File(file));//create pw with the given file name
+            pw.write(jsGraph);//write to pw the graph in the json format
+            pw.close();//close the file
             saved=true;
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {//if there is no such file throw exception
             ex.printStackTrace();
             saved= false;
         }
         return saved;
     }
 
+    /**
+     * This method load a graph by the given json file to this graph.
+     * and return true if this graph was loaded successfully
+     * @param file - file name of JSON file
+     * @return true if this graph loaded successfully
+     */
     @Override
     public boolean load(String file)  {
         boolean loaded;
         try{
-            GsonBuilder gsbuilder=new GsonBuilder();
-            gsbuilder.registerTypeAdapter(DWGraph_DS.class, new GraphJsonDeserializer());
+            GsonBuilder gsbuilder=new GsonBuilder();//create a Gson object
+            gsbuilder.registerTypeAdapter(DWGraph_DS.class, new GraphJsonDeserializer());//Performs the conversion using GraphJsonDeserializer
                     Gson gson=gsbuilder.create();
-            FileReader fr=new FileReader(file);
-            this.graph=gson.fromJson(fr,DWGraph_DS.class);
-//            Gson gson=new Gson();
-//            directed_weighted_graph lGraph;
-//            Reader reader = Files.newBufferedReader(Paths.get(file));
-//            //Reader reader = Files.newBufferedReader(Paths.get(file));
-//           //  br =new BufferedReader(new FileReader(file));
-//           // JsonReader JS=new JsonReader(new FileReader(file));
-//
-//            this.graph= gson.fromJson(reader,DWGraph_DS.class);
-//            //reader.close();
-//           // this.graph=gson.fromJson(json_str,DWGraph_DS.class);
-//            reader.close();
-
+            FileReader fr=new FileReader(file);//file reader
+            this.graph=gson.fromJson(fr,DWGraph_DS.class);//pointe to the gson.fromJson
           loaded= true;
         }
         catch (FileNotFoundException e){
@@ -408,8 +384,8 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
     /**
      * This metohd return true if the graph is weakly connected-
-     * @param src
-     * @return
+     * @param src-the source node
+     * @return true if this graph connected (weakly)
      */
     public boolean isWeaklyConnected(int src){
         if (this.graph.nodeSize() == 0) return true;//empty graph is connected
@@ -431,8 +407,8 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     /**
      * This method reverses the order in the list
      * for example- input :(a3,a2,a1) ,output: (a1,a2,a3)
-     * @param list
-     * @return
+     * @param list-the list that needed to be reversed
+     * @return the reversed list
      */
     //if this method input is (a3,a2,a1) the  output is (a1,a2,a3)
     public List<node_data> reverseList(List<node_data> list){

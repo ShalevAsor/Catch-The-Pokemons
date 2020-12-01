@@ -1,6 +1,4 @@
-package ex2;
-
-import ex2.geo_location;
+package api;
 
 /**
  * This interface represents the set of operations applicable on a 

@@ -1,6 +1,4 @@
-package ex2;
-
-import ex2.directed_weighted_graph;
+package api;
 
 import java.io.Serializable;
 /**
@@ -26,7 +24,7 @@ public interface game_service extends Serializable{
 	 * Returns an interface to the graph (should NOT be used) for final version - for testing only.
 	 * @return
 	 */
-	public directed_weighted_graph getJava_Graph_Not_to_be_used();
+	default directed_weighted_graph getJava_Graph_Not_to_be_used() {return null;}
 	/**
 	 * Returns a JSON string, representing all Pokemons (fixed bonus coin).
 	 * @return

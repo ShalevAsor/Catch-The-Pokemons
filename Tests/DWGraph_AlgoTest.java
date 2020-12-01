@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ex2.*;
+import api.*;
 
 
 import java.util.LinkedList;
@@ -257,10 +257,14 @@ class DWGraph_AlgoTest {
         Assertions.assertTrue(g12.load("myGraph"));
         assertEquals(g12.getGraph(), g11.getGraph());
     }
+
+    /**
+     * simple test that it is possible to load the given graph (A0,...,A5)
+     */
     @Test
     void A0GRAPH(){
         dw_graph_algorithms g=new DWGraph_Algo();
-        g.load("C:\\Users\\Shalev Asor\\IdeaProjects\\Ex2\\Ariel_OOP_2020\\data\\A5");
+        g.load("A5");
         System.out.println(g.getGraph().toString());
     }
 

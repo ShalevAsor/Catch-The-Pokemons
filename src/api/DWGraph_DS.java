@@ -1,4 +1,4 @@
-package ex2;
+package api;
 
 import java.util.*;
 
@@ -107,7 +107,7 @@ public class DWGraph_DS implements directed_weighted_graph {
         }
         else {//at this point if node_id has no neighbors the method will return an empty list
             //iterate of all his neighbors
-            for (ex2.node_data n : this.neighbors.get(node_id)) {
+            for (api.node_data n : this.neighbors.get(node_id)) {
                 edge_data edgePointer = this.getEdge(node_id, n.getKey());//pointer to the edge between src and his neighbors
                 if(edgePointer!=null){
                 Collection.add(edgePointer);//add the edge to the collection
@@ -204,19 +204,6 @@ public class DWGraph_DS implements directed_weighted_graph {
         return Objects.hash(src, dest);
     }
 
-    /**
-     * Auxiliary method-return the edge hashcode if there is an edge between node1 and node2
-     * else return -1
-     * Complexity-O(1)
-     */
-    public boolean hasEdge(int src, int dest) {
-        boolean ans = false;
-        if (this.neighbors.get(src).contains(this.vertices.get(dest))) {//if src connected to dest
-            ans = true;
-        }
-        return ans;
-    }
-
     public boolean isInTheGraph(int src, int dest) {
         boolean ans;
         if (this.vertices.containsKey(src) && this.vertices.containsKey(dest)) {
@@ -266,15 +253,14 @@ public class DWGraph_DS implements directed_weighted_graph {
         if (this == o) return true;
         if (!(o instanceof DWGraph_DS)) return false;
         DWGraph_DS that = (DWGraph_DS) o;
-        for(node_data n: that.getV()) {
+        for(node_data n: that.getV()) {//verify this graph contains each vertices of o
             if (!getVertices().containsKey(n.getKey())) {
                 return false;
             }
-            for(edge_data e: that.getE(n.getKey())){
+            for(edge_data e: that.getE(n.getKey())){//verify this graph contains each edge of o
                 if(!getEdges().containsKey(hashCode(e.getSrc(),e.getDest()))){
                     return false;
                 }
-
         }
         }
         return true;

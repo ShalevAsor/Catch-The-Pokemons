@@ -1,6 +1,4 @@
-package ex2;
-
-import ex2.directed_weighted_graph;
+package api;
 
 import java.util.List;
 /**

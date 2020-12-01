@@ -1,10 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
-import ex2.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
+import api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 
 /**
@@ -281,6 +278,25 @@ class DWGraph_DSTest {
         g11.connect(2,3,-1);//illegal weight-MC should stay 12
         g11.connect(11,2,2);//11 is not in the graph-MC should stay 12
         Assertions.assertEquals(12,g11.getMC());
+    }
+    /**
+     * Test that this is possible to build a 1 mil nodes graph and 10mil edges (almost 11 mil)
+     * note:in my computer it took seven seconds.
+     */
+    @Test
+    void milTenMil() {
+        directed_weighted_graph g = new DWGraph_DS();
+        int i = 2, size = 1000000;
+        g.addNode(new NodeData(0));
+        g.addNode(new NodeData(1));
+        while (i <= size) {
+            g.addNode(new NodeData(i));
+            g.connect(i - 1, i, 1);
+            g.connect(i - 2, i, 1);
+            i++;
+        }
+        Assertions.assertEquals(1999998, g.edgeSize());
+        Assertions.assertEquals(1000001, g.nodeSize());
     }
 
 }
