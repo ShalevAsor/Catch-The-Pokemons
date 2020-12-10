@@ -67,6 +67,25 @@ The red circle is the agent, the purple circle is negative pokemon type <br>
 it means that the pokemon is on edge that the src<dest <br>
 the green circle is positive pokemon type src>dest <br>
 
+## Operating Instructions 
+from  the cmd/terminal use git clone : <br>
+```sh
+git clone https://github.com/ShalevAsor/Ex2.git
+```
+or you can download the zip file : 
+<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/tbmwltmmzg3y.png" border="0" alt="downzip" /></a>
+
+after that you need to include the libraries from the libs directory in the project . <br>
+<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/rdmiizmzldnb.png" border="0" alt="ps" /></a>
+
+now you can run the project in the classic way from your workspace <br>
+or you can use the Ex2.jar file that comes with the project 
+and use this command : 
+```sh
+java -jar Ex2.jar <id> <level>
+```
+Note : you should include the :Data: directory in the directory above. 
+
 
 
 
