@@ -7,10 +7,17 @@ is that each edge on a weight graph has weight wich is a positive number. <br>
 the difference between directed graph to simple undirected graph is that <br>
 each edge in direceted graph has a direction. <br>
 edge between node 1 and node 2 is NOT equals to edge between node 2 to node 1. <br>
+you can find much more information about directed graph in the link below <br>
 
-## the benefits of using my dwg:
+
+
+## The benefits of using my dwg:
 - Low Complexity
 - Support more than one mil verteices and ten mil edges
 - each public class has tests
 - support algorithms like Dijkstra's and Bfs
+
+## How it works? 
+add node into the graph : addNode(<vertex>)
+
 
