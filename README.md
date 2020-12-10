@@ -73,7 +73,7 @@ from  the cmd/terminal use git clone : <br>
 git clone https://github.com/ShalevAsor/Ex2.git
 ```
 or you can download the zip file : 
-<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/tbmwltmmzg3y.png" border="0" alt="downzip" /></a>
+<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up3/iohzho0td5ty.png" border="0" alt="downzip" /></a>
 
 after that you need to include the libraries from the libs directory in the project . <br>
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/rdmiizmzldnb.png" border="0" alt="ps" /></a>
