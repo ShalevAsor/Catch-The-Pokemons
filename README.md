@@ -30,7 +30,7 @@ For more information, i recommend diving into the code, there is explanations at
 
 This class supports few algorithms like bfs and dijkstra's <br>
 it allows to save the graph into a json format and load a graph from json format <br>
-the bfs algo used to find out if this graph is strongley connected <br>
+the bfs algo used to find out if this graph is strongly connected <br>
 method : isConnected - return true if this graph is strongly connected <br>
 ** what is strongly connected graph ? ** <br>
 it means there is a path from each node in the graph to every other node <br>
@@ -84,7 +84,7 @@ and use this command :
 ```sh
 java -jar Ex2.jar <id> <level>
 ```
-Note : you should include the :Data: directory in the directory above. 
+ 
 
 
 
