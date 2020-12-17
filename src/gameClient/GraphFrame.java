@@ -14,8 +14,10 @@ public class GraphFrame extends JFrame {
     private Arena _ar = new Arena();
     private GraphLabel gl;
 
-
-    public GraphFrame(directed_weighted_graph g) {
+    /**
+     * simple frame constructor, (60% of the screen size)
+     */
+    public GraphFrame() {
         super();
         this.setTitle("OOP-directional weighted graph-catch the pokemons");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//if the frame will close then all the program will be closed

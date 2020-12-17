@@ -5,6 +5,10 @@ import gameClient.util.Point3D;
 
 import java.util.*;
 
+/**
+ * This class contains the algorithms of the game, like next node and more.
+ *
+ */
 public class GameAlgo {
     public static Arena _ar;
     private static final dw_graph_algorithms graphAlgo = new DWGraph_Algo();

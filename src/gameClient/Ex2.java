@@ -49,7 +49,7 @@ public class Ex2 implements Runnable {
                 }
 
             }
-            _level = _gl.getLevel();
+            _level = _gl.getLevel();//init the user data
             _id = _gl.getId();
             _gl.setVisible(false);
         }
@@ -96,7 +96,7 @@ public class Ex2 implements Runnable {
         GameAlgo._ar = new Arena();//create new Arena for the game
         GameAlgo._ar.setGraph(gameGraph);//set the graph and the pokemons
         GameAlgo._ar.setPokemons(Arena.json2Pokemons(fs));
-        _win = new GraphFrame(gameGraph);//create new GraphFrame
+        _win = new GraphFrame();//create new GraphFrame
         _win.update(GameAlgo._ar);//update the current arena
         _gp = new GraphPanel(gameGraph);//create new panel (to avoid the flicker of the frame)
         _gp.update(GameAlgo._ar, gameGraph);

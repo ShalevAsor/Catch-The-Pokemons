@@ -18,6 +18,9 @@ public class GraphLabel extends JFrame implements ActionListener {
     private int level,id;
     private boolean userIsDone=false;
 
+    /**
+     *  constructor for the login frame
+     */
     public GraphLabel(){
         super();
         this.setTitle("OOP-login to the game");
@@ -26,9 +29,9 @@ public class GraphLabel extends JFrame implements ActionListener {
         int height = (int) (dimension.height * 0.3);//the size will be 30% of the screen size
         int width = (int) (dimension.width * 0.3);
         this.setSize(width, height);
-        tfID=new JTextField();
+        tfID=new JTextField();// text field for the id
         tfID.setBounds(150,50,100,20);
-        tfLEVEL=new JTextField();
+        tfLEVEL=new JTextField();//text field for the level
         tfLEVEL.setBounds(150,80,100,20);
         jl1=new JLabel();
         jl1.setBounds(30,50,100,20);
@@ -36,19 +39,23 @@ public class GraphLabel extends JFrame implements ActionListener {
         jl2=new JLabel();
         jl2.setBounds(30,80,100,20);
         jl2.setText("insert level:");
-        jbSTART =new JButton("Start");
+        jbSTART =new JButton("Start");// the button that run the game
         jbSTART.setBounds(130,110,80,40);
         jbSTART.setBackground(Color.cyan);
         jbSTART.addActionListener(this);
-        this.add(jl1);
+        this.add(jl1);//adding all the elements to the frame
         this.add(jl2);
         this.add(jbSTART);
         this.add(tfID);
         this.add(tfLEVEL);
-        setLayout(null);
+        setLayout(null);//default manage for the elements in the frame
         this.setVisible(true);
     }
 
+    /**
+     *  this method get the data from the user
+     * @param e- dont used in this method
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String idString = tfID.getText();

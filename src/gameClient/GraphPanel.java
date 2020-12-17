@@ -14,7 +14,7 @@ import java.util.List;
  * This class is a panel for the GraphFrame, this class is drawing the graph on the frame
  * purple circle  represent an pokemon with -1 type (src bigger dest)
  * green circle represent an pokemon with +1 type(src smaller dest)
- * red circle represent an agent
+ * red circle represent an agent.
  */
 public class GraphPanel extends JPanel {
     private Arena _ar = new Arena();

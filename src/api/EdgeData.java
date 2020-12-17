@@ -57,7 +57,7 @@ public class EdgeData implements edge_data{
 
     /**
      * This method allows to set an info in this edge
-     * @param s
+     * @param s- the new info
      */
     @Override
     public void setInfo(String s) {
