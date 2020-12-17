@@ -70,7 +70,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
      * the first one is the graph that i made with: edges,vertices,ModeCount,Neighbors
      * the second one is the graph that made with:Edges,Nodes
      */
-    static class GraphJsonDeserializer implements JsonDeserializer<DWGraph_DS> {
+   public static class GraphJsonDeserializer implements JsonDeserializer<DWGraph_DS> {
 
         @Override
         public DWGraph_DS deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -166,7 +166,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
     /**
      * This method compute a deep copy of this graph
-     * Complexity-if n is the sum of the vertices and V is the sum of the edges -->O(v*n)
+     * Complexity-if n is the sum of the vertices and V is the sum of the edges O(v*n)
      * @return copy of this graph
      */
     @Override
@@ -236,7 +236,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
     /**
      * This method return list represent the shortest path from the source vertex to the destination vertex
-     * src--->node1---->node2----->...----->dest
+     * src---node1----node2-----...-----dest
      * this method based on Dijkstra's algorithm.
      * Complexity- O(v^2) (v=vertices)
      * @param src - source node

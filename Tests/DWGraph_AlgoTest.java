@@ -262,9 +262,9 @@ class DWGraph_AlgoTest {
      * simple test that it is possible to load the given graph (A0,...,A5)
      */
     @Test
-    void A0GRAPH(){
+    void DataJsonGraph(){
         dw_graph_algorithms g=new DWGraph_Algo();
-        g.load("A5");
+        g.load("./data./A5");
         System.out.println(g.getGraph().toString());
     }
 

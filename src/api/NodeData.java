@@ -76,7 +76,18 @@ public class NodeData implements  node_data{
                     ", _z=" + _z +
                     '}';
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof GeoLocation)) return false;
+            GeoLocation that = (GeoLocation) o;
+            return Double.compare(that._x, _x) == 0 &&
+                    Double.compare(that._y, _y) == 0 &&
+                    Double.compare(that._z, _z) == 0;
+        }
     }
+
 
     //----------------NodeInfo_methods--------------//
 
@@ -179,7 +190,7 @@ public class NodeData implements  node_data{
 
     /**
      * allow to set a new key to this node
-     * @param key
+     * @param key - the new key
      */
     public void setKey(int key){
         _key=key;
