@@ -67,12 +67,12 @@ The game consists of 24 levels, each with agents and Pokémon. The agents must c
     java -jar Ex2.jar <id> <level>
     ```
 
-## Contact
 
-For further questions or feedback, please reach out to:
+## 🌐 Connect with Me
 
-- **MY Website:** your.email@example.com
-- **Linkedin:** [Shalev Asor](https://www.linkedin.com/in/shalev-asor-43067b1b1/)
+- **Website:** [My Website](https://shalevasor.github.io/)
+- **Contact:** [shalevasor@gmail.com](mailto:shalevasor@gmail.com)
+- **Connect with me on LinkedIn:** [Shalev Asor](https://www.linkedin.com/in/shalev-asor)
 
 
 
